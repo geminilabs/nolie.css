@@ -1,0 +1,117 @@
+// GLOBALS
+// ---------------------------------------------------------------------------
+
+$border-width: 1px !default;
+$border-radius: 3px !default;
+$button-radius: 3px !default;
+
+$z-indexes: (
+	modal: 5000,
+	dropdown: 4000,
+	above: 20,
+	default: 10,
+	below: -1,
+);
+
+// $baseline: 4px !default;
+// $font-size: 16px !default;
+// $color-white: #fff !default;
+// $color-black: #000 !default;
+
+// $heading-margin-bottom: $font-size !default;
+// $text-margin-bottom: $font-size !default;
+
+// $breakpoints: (
+// 	T: 360px,
+// 	XS: 480px,
+// 	S: 600px,
+// 	M: 768px,
+// 	L: 960px,
+// 	XL: 1140px,
+// 	XXL: 1380px,
+// );
+
+// $widths: (
+// 	S: 480px,
+// 	M: 600px,
+// 	L: 740px,
+// 	XL: 840px,
+// );
+
+
+
+// $typefaces: (
+// 	monospace:  (Consolas, Monaco, 'Courier New', monospace),
+// 	sans-serif: (Lato, sans-serif),
+// 	serif:      (Lato, sans-serif),
+// );
+
+// $font-families: (
+// 	button:  map-get($typefaces, sans-serif),
+// 	heading: map-get($typefaces, sans-serif),
+// 	input:   map-get($typefaces, sans-serif),
+// 	text:    map-get($typefaces, sans-serif),
+// );
+
+// $typography: (
+// 	button: (
+// 		larger:  (($font-size + 4), 20px), //1
+// 		large:   (($font-size + 2), 20px), //1.11111
+// 		default: (($font-size),     20px), //1.25
+// 		small:   (($font-size - 2), 20px), //1.42857
+// 		smaller: (($font-size - 4), 20px), //1.66666
+// 	),
+// 	heading: (
+// 		title:   (60px, 64px),//1.06666
+// 		h1:      (48px, 52px),//1.08333
+// 		h2:      (36px, 1.1), //40px, 1.11111
+// 		h3:      (24px, 1.3), //32px, 1.33333
+// 		h4:      (21px, 1.5), //32px, 1.52381
+// 		h5:      (18px, 1.5), //28px, 1.55555
+// 		h6:      (16px, 1.5), //24px, 1.5
+// 	),
+// 	input: (
+// 		larger:  (19px, 24px), //1.26316
+// 		large:   (17px, 24px), //1.41176
+// 		default: (15px, 24px), //1.6
+// 		small:   (13px, 24px), //1.84615
+// 		smaller: (11px, 24px), //2.18182
+// 	),
+// 	text: (
+// 		larger:  (($font-size + 4), 1.6), //32px, 1.6
+// 		large:   (($font-size + 2), 1.5), //28px, 1.55555
+// 		default: (($font-size),     1.5), //24px, 1.5
+// 		small:   (($font-size - 2), 1.4), //20px, 1.42857
+// 		smaller: (($font-size - 4), 1.6), //20px, 1.66666
+// 	),
+// );
+
+// $colors: (
+// 	button: (
+// 		active: $color-white,
+// 		default: $color-white,
+// 		disabled: $color-white,
+// 		hover: $color-white,
+// 	),
+// 	heading: (
+// 		default: material-color(blue-grey, 900),
+// 	),
+// 	link: (
+// 		active: material-color(blue, 600),
+// 		default: material-color(blue, 500),
+// 		hover: material-color(blue, 400),
+// 	),
+// 	status: (
+// 		error: material-color(red, 700),
+// 		success: material-color(green, 700),
+// 		warning: material-color(orange, 700),
+// 	),
+// 	text: (
+// 		default: material-color(blue-grey, 700),
+// 	),
+// );
+
+// $grid: (
+// 	columns: 12,
+// 	gutter: 2%,
+// );

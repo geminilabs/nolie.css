@@ -1,0 +1,43 @@
+// COLORS
+// ---------------------------------------------------------------------------
+
+$colors: () !default;
+
+$default-colors: (
+	white: #fff,
+	black: material-color(grey, 900),
+	heading: material-color(grey, 900),
+	text: material-color(grey, 800),
+	muted: material-color(grey, 700),
+	primary: material-color(pink),
+	success: material-color(light-green),
+	info: material-color(light-blue),
+	warning: material-color(orange, 700),
+	danger: material-color(red, 900),
+);
+
+
+// $colors: (
+// 	button: (
+// 		active: map-get($color, white),
+// 		default: map-get($color, white),
+// 		disabled: map-get($color, white),
+// 		hover: map-get($color, white),
+// 	),
+// 	heading: (
+// 		default: material-color(blue-grey, 900),
+// 	),
+// 	link: (
+// 		active: material-color(blue, 600),
+// 		default: material-color(blue, 500),
+// 		hover: material-color(blue, 400),
+// 	),
+// 	status: (
+// 		error: material-color(red, 700),
+// 		success: material-color(green, 700),
+// 		warning: material-color(orange, 700),
+// 	),
+// 	text: (
+// 		default: material-color(blue-grey, 700),
+// 	),
+// );

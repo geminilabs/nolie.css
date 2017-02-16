@@ -1,0 +1,190 @@
+
+@import "../../node_modules/sassy-gridlover/sassy-gridlover/functions";
+@import "../../node_modules/sassy-gridlover/sassy-gridlover/debug-mode";
+@import "../../node_modules/sassy-gridlover/sassy-gridlover/sassy-gridlover";
+
+/// To use in the `<body>`.
+/// Outputs `font-size` and `line-height`.
+@mixin body-rhythm($font-size: $sgl-base-font-size, $unit: $sgl-base-unit) {
+    @include sgl-body($font-size, $unit);
+}
+
+/// To use in headings `<h1> - <h4>`.
+/// Outputs `font-size`, `line-height`, `margin-bottom` and `margin-top`.
+@mixin heading-rhythm($step, $margin-step: false, $unit: $sgl-base-unit, $base-value: $sgl-base-font-size) {
+    $font-size: $sgl-base-font-size;
+    $scale: $sgl-scale-factor;
+    $computed-font-size: round($font-size * sgl-exponent($scale, $step));
+    $line-height: round($font-size * $sgl-base-line-height);
+    $lines: ceil($computed-font-size / $line-height);
+    $computed-line-height: $line-height * $lines;
+    $margin-bottom: $line-height;
+    $margin-top: $line-height;
+
+    @if not $margin-step {
+        $margin-step: $step;
+    }
+
+    @if ($margin-step == 3) {
+        $margin-bottom: $line-height * 2;
+        $margin-top: $line-height;
+    }
+
+    @if ($margin-step == 2) {
+        $margin-bottom: $line-height;
+        $margin-top: $line-height;
+    }
+
+    @if ($margin-step <= 1) {
+        $margin-bottom: 0;
+        $margin-top: $line-height;
+    }
+
+    @if($sgl-debug-mode == true) {
+        @include sgl-show-margins($margin-bottom, $margin-top, $computed-font-size);
+    }
+
+    @if ($unit == "px" or $unit == "pxrem") {
+        font-size: $computed-font-size * 1px;
+        line-height: $computed-line-height * 1px;
+        margin-bottom: $margin-bottom * 1px;
+        margin-top: $margin-top * 1px;
+    }
+
+    @if ($unit == "rem" or $unit == "pxrem") {
+        font-size: sgl-rem-calc($computed-font-size);
+        line-height: sgl-rem-calc($computed-line-height);
+        margin-bottom: sgl-rem-calc($margin-bottom);
+        margin-top: sgl-rem-calc($margin-top);
+    }
+
+    @if ($unit == "em") {
+        font-size: sgl-decimal-ceil(sgl-em-calc($computed-font-size, $base-value), 5);
+        line-height: sgl-decimal-ceil(sgl-em-calc($computed-line-height, $computed-font-size), 5);
+        margin-bottom: sgl-decimal-ceil(sgl-em-calc($margin-bottom, $computed-font-size), 5);
+        margin-top: sgl-decimal-ceil(sgl-em-calc($margin-top, $computed-font-size), 5);
+    }
+}
+
+/// To use in `<p>`, `<ul>`, `<ol>`, `<pre>`, `<table>`, `<blockquote>`, etc.
+/// Outputs `margin-bottom` and `margin-top`.
+@mixin margin-rhythm($unit: $sgl-base-unit, $base-value: $sgl-base-font-size) {
+    @include sgl-margins($unit, $base-value);
+}
+
+@function get-rhythm-size($rhythm, $num) {
+    @return ($rhythm / 8) * $num;
+    // @return $rhythm * ((1 / $sgl-base-font-size) * $num);
+}
+
+@mixin vertical-rhythm($options: ()) {
+    $options: map-merge((
+        step: 0,
+        borders: (0,0), // top,bottom
+        padding: (0,0), // top,bottom
+        margins: (0,0), // top,bottom
+        base-unit: $sgl-base-unit,
+        base-value: $sgl-base-font-size,
+    ), $options);
+
+    $step: map-get($options, step);
+    $borders: map-get($options, borders);
+    $padding: map-get($options, padding);
+    $margins: map-get($options, margins);
+    $unit: map-get($options, base-unit);
+    $base-value: map-get($options, base-value);
+
+    $computed-font-size: round($sgl-base-font-size * sgl-exponent($sgl-scale-factor, $step));
+
+    $line-height: round($sgl-base-font-size * $sgl-base-line-height);
+    $lines: ceil($computed-font-size / $line-height);
+    $computed-line-height: $line-height * $lines;
+
+    $margin-top: ($line-height * nth($margins, 1)) - nth($borders, 1);
+    $margin-bottom: ($line-height * nth($margins, 2)) - nth($borders, 2);
+
+    $rhythm: $line-height;
+
+    $size-xxs:  get-rhythm-size($rhythm, 1); //12.5%
+    $size-xs:   get-rhythm-size($rhythm, 2); //25%
+    $size-s:    get-rhythm-size($rhythm, 3); //37.5%
+    $size-m:    get-rhythm-size($rhythm, 4); //50%
+    $size-l:    get-rhythm-size($rhythm, 5); //62.5%
+    $size-xl:   get-rhythm-size($rhythm, 6); //75%
+    $size-xxl:  get-rhythm-size($rhythm, 7); //87.5%
+    $size-full: get-rhythm-size($rhythm, 8); //100%
+
+    // small
+    // padding-top: print-property-unit($size-xxs, $computed-font-size);
+    // $margin-top: ($margin-top - $size-xxs) + nth($borders, 1);
+    // padding-bottom: print-property-unit($size-xxs, $computed-font-size);
+    // $margin-bottom: ($margin-top - $size-xxs) + nth($borders, 1);
+
+    // normal
+    padding-top: print-property-unit($size-xs, $computed-font-size);
+    $margin-top: $margin-top + ($margin-top - $size-xs) + nth($borders, 1);
+    padding-bottom: print-property-unit($size-xs, $computed-font-size);
+    $margin-bottom: $margin-bottom + ($margin-bottom - $size-xs) + nth($borders, 2);
+
+    // big
+    // padding-top: print-property-unit($size-m, $computed-font-size);
+    // padding-bottom: print-property-unit($size-m, $computed-font-size);
+
+    // large
+    // padding-top: print-property-unit($size-xl, $computed-font-size);
+    // padding-bottom: print-property-unit($size-xl, $computed-font-size);
+    // $margin-top: $margin-top + $size-xs;
+    // $margin-bottom: $margin-bottom + $size-xs;
+
+    // xlarge
+    // padding-top: print-property-unit($size-full, $computed-font-size);
+    // padding-bottom: print-property-unit($size-full, $computed-font-size);
+
+    font-size: print-property-unit($computed-font-size, $base-value);
+    line-height: print-property-unit($computed-line-height, $computed-font-size);
+    margin-top: print-property-unit($margin-top, $computed-font-size);
+    margin-bottom: print-property-unit($margin-bottom, $computed-font-size);
+
+    @if($sgl-debug-mode == true) {
+        @include debug-margins(($margin-top, $margin-bottom), $borders, $computed-font-size);
+    }
+
+}
+
+@mixin debug-margins($margins: (0,0), $borders: (0,0), $computed-font-size: $sgl-base-font-size) {
+    position: relative;
+    &:before,
+    &:after {
+        content: "";
+        display: block;
+        left: 0;
+        position: absolute;
+        min-width: 100%;
+        right: - print-property-unit(nth($borders, 1), $computed-font-size);
+        left: - print-property-unit(nth($borders, 2), $computed-font-size);
+    }
+    &:before {
+        top: - print-property-unit(nth($margins, 1) + nth($borders, 1), $computed-font-size);
+        height: print-property-unit(nth($margins, 1) + nth($borders, 1), $computed-font-size);
+        background: hsla(200, 100%, 50%, 0.3) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40px" height="300px" viewBox="0 0 40 300"><path d="M9.5,1.5 L9.5,298.5" stroke="#1AB3FF"/><polyline stroke="#1AB3FF" fill="none" points="5.5 5.5 9.5 0.5 13.5 5.5"/></svg>') 51% top repeat-y;
+    }
+    &:after {
+        bottom: - print-property-unit(nth($margins, 2) + nth($borders, 2), $computed-font-size);
+        height: print-property-unit(nth($margins, 2) + nth($borders, 2), $computed-font-size);
+        background: hsla(200, 100%, 50%, 0.3) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40px" height="300px" viewBox="0 0 40 300"><path d="M9.5,1.5 L9.5,298.5" stroke="#1AB3FF"/><polyline stroke="#1AB3FF" fill="none" points="5.5 294.5 9.5 299.5 13.5 294.5"/></svg>') 49% bottom repeat-y;
+    }
+}
+
+
+
+@function print-property-unit($unit, $base-font-size) {
+    @if index(pxrem px, $sgl-base-unit) {
+        @return $unit * 1px;
+    }
+    @if index(pxrem rem, $sgl-base-unit) {
+        @return sgl-rem-calc($unit);
+    }
+    @if index(em, $sgl-base-unit) {
+        @return sgl-decimal-ceil(sgl-em-calc($unit, $base-font-size), 5);
+    }
+}

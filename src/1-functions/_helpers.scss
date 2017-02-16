@@ -1,0 +1,55 @@
+@function color($value) {
+	$colors: extend($default-colors, $colors, true);
+	@return map-get($colors, $value);
+}
+
+@function material-color($color-name, $color-variant: 500) {
+	@if type-of($color-variant) == 'number' {
+		$color-variant:inspect($color-variant);
+	}
+	$color: map-get(map-get($material-colors, $color-name), $color-variant);
+	@if $color {
+		@return $color;
+	}
+	@else {
+		@error "=> ERROR: COLOR NOT FOUND! <= | Your $color-name (#{$color-name}), $color-variant (#{$color-variant}) combination did not match any of the values in the $material-colors map.";
+	}
+}
+
+@function z-index($key) {
+	@return map-get($z-indexes, $key);
+}
+
+// @function breakpoint($key) {
+// 	@return map-get($breakpoints, $key);
+// }
+
+// @function font-family($key: text) {
+// 	@return map-get($font-families, $key);
+// }
+
+// @function grid($key) {
+// 	@return map-get($grids, $key);
+// }
+
+// @function typeface($key) {
+// 	@return map-get($typefaces, $key);
+// }
+
+// @function typography($type, $property: font-size, $size: default) {
+// 	$values: map-get(map-get($typography, $type), $size);
+// 	@if $property == 'font-size' {
+// 		@return nth($values, 1);
+// 	}
+// 	@else if $property == 'line-height' {
+// 		$line-height: nth($values, 2);
+// 		@if unitless($line-height) {
+// 			$line-height: nth($values, 1) * nth($values, 2);
+// 		}
+// 		@return round($line-height / $baseline) * $baseline;
+// 	}
+// }
+
+// @function width($key) {
+// 	@return map-get($widths, $key);
+// }

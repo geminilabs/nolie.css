@@ -1,0 +1,160 @@
+@if enabled(output) {
+
+body {
+	$body: () !default
+	margin: 0 auto;
+	@include typeface(body);
+	color: color(text);
+	@include print($body);
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+	@include typeface(display);
+	@include margin(0 0 1);
+	color: color(heading);
+}
+h1, .h1 {
+	$h1: () !default
+	@include typeset(heading-1);
+	@include print($h1);
+}
+h2, .h2 {
+	$h2: () !default
+	@include typeset(heading-2);
+	@include print($h2);
+}
+h3, .h3 {
+	$h3: () !default
+	@include typeset(heading-3);
+	@include print($h3);
+}
+h4, .h4 {
+	$h4: () !default
+	@include typeset(heading-4);
+	@include print($h4);
+}
+h5, .h5 {
+	$h5: () !default
+	@include typeset(heading-5);
+	@include print($h5);
+}
+h6, .h6 {
+	$h6: () !default
+	@include typeset(heading-6);
+	@include print($h6);
+}
+
+p, ul, ol, pre, table, blockquote {
+	@include margin(0 0 1);
+}
+
+p {
+	@include typeset(paragraph);
+}
+
+blockquote {
+	$blockquote: () !default
+	position: relative;
+	@include line-height(1.5);
+	@include padding(0.5 1);
+	@if enabled(styled) {
+		border: solid rgba(material-color(blue-grey, 900), 0.1);
+		@include spacing(border-width, 0 0 0 0.25);
+	}
+	@include print($blockquote);
+	p {
+		margin: 0;
+		@include font-size(l);
+	}
+}
+
+cite {
+	display: block;
+}
+
+small {
+	@include font-size(s);
+	line-height: 1;
+}
+
+ul ul,
+ul ol,
+ol ul,
+ol ol {
+	margin: 0;
+}
+
+dd {
+	@include margin(0 0 0.5);
+}
+
+dt {
+	font-weight: weight(bold);
+}
+
+sub,
+sup {
+	position: relative;
+	line-height: 0;
+	vertical-align: baseline;
+	@include font-size(s);
+}
+sub {
+	@include spacing(bottom, -0.125);
+}
+sup {
+	@include spacing(top, -0.25);
+}
+
+mark {
+	@if enabled(styled) {
+		background: material-color(yellow, 100);
+	}
+}
+
+abbr[title] {
+	border-bottom: .1em dotted currentColor;
+	cursor: help;
+}
+
+code, kbd {
+	padding: 2px 4px;
+	line-height: 1;
+	border-radius: $border-radius;
+	@if enabled(styled) {
+		color: material-color(red, 900);
+		background: rgba(material-color(red, 50), 0.5);
+	}
+}
+
+pre {
+	display: block;
+	border-radius: $border-radius;
+	word-wrap: normal;
+	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
+	@include line-height(1.5);
+	@include padding(0.25 0.5);
+	@include debug-baseline;
+	@if enabled(styled) {
+		background-color: rgba(material-color(grey, 50), 1);
+		border: solid rgba(material-color(grey, 200), 1);
+		@include baseline-borders($border-width, 0, 1);
+		border-left-width: 5px;
+	}
+	else {
+		@include margin-bottom(1);
+	}
+	code {
+		padding: 0;
+		word-break: normal;
+		white-space: pre;
+		@if enabled(styled) {
+			color: material-color(grey, 700);
+			background-color: transparent;
+		}
+	}
+}
+
+} // @endif

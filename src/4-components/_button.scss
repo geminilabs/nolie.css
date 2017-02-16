@@ -1,0 +1,7 @@
+@if enabled(output) {
+
+.button {
+	@include button();
+}
+
+} // @endif

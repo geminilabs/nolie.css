@@ -1,0 +1,97 @@
+@import "../../node_modules/typey/stylesheets/typey";
+
+// Allowed units: rem, em or px
+$base-unit: rem;
+
+// The base font size will be used for most calculations involving font-size.
+// Allowed units: px
+$base-font-size: 16px;
+
+// The base line height will be used for most calculations involving height.
+// Allowed units: px
+$base-line-height: 24px;
+
+// The method to calculate line-height. Allowed values: rhythm or ratio.
+// Rhytm uses a vertical rhythm approach where line-height is specified as
+// a multiple of the $base-line-height.
+// Ratio uses a ratio approach where line-height is specified as a ratio
+// of the elements font-size.
+$line-height-method: rhythm;
+
+// The default ratio of line-height to font-size.
+$base-line-height-ratio: 1.5;
+
+// By default we will provide fallbacks when rem is the base unit.
+$rem-fallback: true;
+
+// By default, when rem or em are the base unit we will output a print suitable
+// media query with the define-type-sizing() mixin. This will take care of all
+// print media type sizing effortlessly.
+$auto-print-sizing: true;
+
+// The pt font-size to be used with the print media query when
+// $auto-print-sizing is enabled.
+// Allowed units: pt
+$print-font-size: 12pt;
+
+// Default font sizes
+// Once you redefine the $font-size map it will overwrite all sizes here.
+// - Defaults are taken from a multi-stranded modular scale (16px/1.125/1.333)
+// - Link: http://www.modularscale.com/?16&px&1.125,1.333&web&text
+// Allowed units: px
+$font-size: (
+  h1:  50.517px,
+  h2:  37.897px,
+  h3:  28.43px,
+  xxl: 25.629px,
+  xl:  21.328px,
+  l:   18px,
+  m:   16px,
+  s:   14.222px,
+  xs:  12.003px,
+);
+
+// Default font weights
+// This map and accompanying function help provide granular control over
+// setting and retrieving static font weights.
+$font-weight: (
+  bolder:  900,
+  bold:    700,
+  normal:  400,
+  light: 200
+);
+
+// Declare typefaces
+// These can use any key you like, and allow you to set global letter-spacing,
+// weight and case for font-families. You can then use the
+// font-family mixin to embed your font families anywhere you like.
+// [font-family] [letter-spacing] [weight] [style] [case]
+$typefaces: (
+  button:    ('Open Sans', sans-serif),
+  display:   ('Open Sans', sans-serif) -.5px,
+  body:      (Merriweather, serif),
+  monospace: (Consolas, Monaco, monospace),
+);
+// $native-sans-serif: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+
+// Declare typestyles
+// These can use any key you like, and allow you to set an easily reusable type
+// style. They can be as simple as a font-size and line-height, or can go on
+// to encompass a full range of css type properties.
+// [font-size] [line-height] [weight] [style] [case] [letter-spacing]
+$typestyles: (
+	heading-1: h1 2 bolder uppercase,
+	heading-2: h2 2 bold,
+	heading-3: h3 1.5 bold,
+	heading-4: xxl 1.5 bold,
+	heading-5: xl 1 bold,
+	heading-6: l 1 bold uppercase,
+  paragraph: m 1,
+);
+
+// Debug grid
+// Shows horizontal lines for each elements line height.
+$typey-debug: enabled(debug);
+
+// Debug grid coloring
+$typey-debug-color: material-color(blue, 400);

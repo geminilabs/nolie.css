@@ -1,0 +1,24 @@
+// INPUTS
+// ---------------------------------------------------------------------------
+
+$input: (
+	background-color: $color-white,
+	border-color: material-color(grey, 200),
+	border-radius: $border-radius,
+	border-width: 1px,
+	box-shadow: none,
+	font-size: 15px,
+	height: ($baseline * 10),
+	padding: 0 12px,
+);
+
+$input-small: (
+	font-size: map-get($input, font-size) - ($baseline / 2),
+	height: ($baseline * 9),
+);
+
+$input-large: (
+	font-size: map-get($input, font-size) + ($baseline / 2),
+	height: ($baseline * 12),
+);
+

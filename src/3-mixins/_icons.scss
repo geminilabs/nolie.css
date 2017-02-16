@@ -1,0 +1,26 @@
+@mixin icons() {
+	@if enabled(icons, calendar) {
+		.icon-calendar:before { content: "\e900"; }
+	}
+	@if enabled(icons, caret-down) {
+		.icon-caret-down:before { content: "\e901"; }
+	}
+	@if enabled(icons, caret-left) {
+		.icon-caret-left:before { content: "\e902"; }
+	}
+	@if enabled(icons, caret-right) {
+		.icon-caret-right:before { content: "\e903"; }
+	}
+	@if enabled(icons, caret-up) {
+		.icon-caret-up:before { content: "\e904"; }
+	}
+	@if enabled(icons, close) {
+		.icon-close:before { content: "\e905"; }
+	}
+	@if enabled(icons, menu) {
+		.icon-menu:before { content: "\e906"; }
+	}
+	@if enabled(icons, search) {
+		.icon-search:before { content: "\e907"; }
+	}
+}

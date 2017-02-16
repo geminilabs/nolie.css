@@ -1,0 +1,56 @@
+//
+@mixin grid-row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+
+	@include breakpoint(sm) {
+		flex-direction: column;
+		flex-wrap: nowrap;
+	}
+}
+
+//
+@mixin generate-grid-columns {
+
+	@for $i from 1 through $grid-columns {
+		$width: 100% / $grid-columns * $i;
+
+		.col-#{$i} {
+			width: $width;
+		}
+
+		.offset-#{$i} {
+			margin-left: $width;
+		}
+	}
+
+	.gutters {
+		@for $i from 1 through $grid-columns {
+			$width: 100% / $grid-columns * $i;
+
+			& > .col-#{$i} {
+				width: calc(#{$width} - #{$grid-gutter});
+			}
+
+			& > .offset-#{$i} {
+				margin-left: calc(#{$width} + #{$grid-gutter});
+			}
+		}
+	}
+}
+
+//
+@mixin grid-media-columns($num) {
+	column-count: $num;
+	column-gap: $grid-gutter;
+
+	& > div {
+		display: inline-block;
+		width: 100%;
+	}
+
+	@include breakpoint(sm) {
+		column-count: 1;
+	}
+}

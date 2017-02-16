@@ -1,0 +1,30 @@
+$features: () !default;
+
+$default-features: (
+	debug: false,
+	output: true,
+	styled: true,
+	buttons: (
+		big: false,
+		large: false,
+		outline: false,
+		upper: false,
+		round: false,
+		secondary: false,
+		small: false,
+		tiny: false,
+		groups: false,
+	),
+	icons: (
+		calendar: false,
+		caret-down: false,
+		caret-left: false,
+		caret-right: false,
+		caret-up: false,
+		close: false,
+		menu: false,
+		search: false,
+	),
+	tables: (
+	),
+);

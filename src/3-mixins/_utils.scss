@@ -1,0 +1,100 @@
+@mixin clearfix {
+	&:after {
+		content: '';
+		display: table;
+		clear: both;
+	}
+}
+
+@mixin baseline-borders($border-width: 1px, $margin-top: 0, $margin-bottom: 0) {
+	border-width: $border-width;
+	margin-top: spacing(($base-line-height * $margin-top) - $border-width);
+	margin-bottom: spacing(($base-line-height * $margin-bottom) - $border-width);
+	// position: relative;
+	// top: $border-width;
+	// @include spacing(margin-top, $margin - $border-width * 2);
+}
+
+@mixin print($declarations) {
+	@each $property, $value in $declarations {
+		@if type-of($value) != map {
+			#{$property}: $value;
+		}
+		@else {
+			#{$property} {
+				@include print($value);
+			}
+		}
+	}
+}
+
+@mixin print-button-style($declarations) {
+	// print top-level properties
+	@each $property, $value in $declarations {
+		@if type-of($value) != map {
+			#{$property}: $value;
+		}
+	}
+	// re-order map
+	$declarations: extend((hover:(), focus:(), active:(), disabled:()), $declarations);
+	// print second-level properties
+	@each $property, $value in $declarations {
+		@if type-of($value) == map {
+			@if index(hover focus, $property) {
+				&:#{$property} {
+					@include print($value);
+				}
+			}
+			@else if index(active disabled, $property) {
+				&:#{$property}, &.#{$property} {
+					@include print($value);
+				}
+			}
+		}
+	}
+}
+
+@mixin retina-background-image($image, $width: auto, $height: auto) {
+	background-image: url($image);
+	background-repeat: no-repeat;
+	@media
+		only screen and (min-device-pixel-ratio: 2),
+		only screen and (min-resolution: 192dpi),
+		only screen and (min-resolution: 2dppx) {
+		background-image: url(str-slice($image, 1, -5) + '-2x' + str-slice($image, -4));
+		background-size: $width $height;
+	}
+}
+
+@mixin striped($color: rgba(255, 255, 255, 0.2), $angle: 45deg) {
+	background-image: linear-gradient($angle, $color 25%, transparent 25%, transparent 50%, $color 50%, $color 75%, transparent 75%, transparent);
+}
+
+@mixin tilted($options: ()) {
+	$options: extend((
+		angle: 3deg,
+		color: #fff,
+		position: top,
+		pseudo: before,
+	), $options);
+
+	position: relative;
+	background-color: map-get($options, color);
+
+	&:#{map-get($options, pseudo)} {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		padding-top: get-tilted-height(map-get($options, angle));
+
+		@if map-get($options, position) == top {
+			bottom: 100%;
+			background-image: linear-gradient(map-get($options, angle), map-get($options, color) calc(50% - 1px), transparent 50%);
+		}
+		@else {
+			top: 100%;
+			background-image: linear-gradient(map-get($options, angle), transparent calc(50% - 1px), map-get($options, color) 50%);
+		}
+	}
+}

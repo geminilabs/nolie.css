@@ -1,0 +1,117 @@
+@if enabled(output) {
+
+form {
+	$form: () !default
+	@include typeface(display);
+	@include margin(0 0 1);
+	@include print($form);
+}
+
+fieldset {
+	$fieldset: () !default
+	display: block;
+	border: 0 solid currentColor;
+	@if enabled(styled) {
+		@include padding(0.25 0.5);
+		border-width: 1px;
+		margin: 0;
+		@include baseline-borders($border-width, 0, 1);
+	}
+	@else {
+		padding: 0;
+		margin: 0;
+	}
+	@include print($fieldset);
+}
+
+legend {
+	$legend: () !default
+	position: absolute;
+	top: - $base-line-height;
+	left: - $border-width;
+	font-weight: weight(normal);
+	padding: 0;
+	@include font-size(s);
+	@include print($legend);
+}
+
+label {
+	$label: () !default
+	display: inline-block;
+	vertical-align: top;
+	cursor: pointer;
+	@include font-size(s);
+	@include line-height(1);
+	@include padding(0);
+	@include print($label);
+}
+
+input,
+select,
+textarea {
+	display: block;
+	width: 100%;
+	outline: none;
+	background-color: transparent;
+	border: solid currentColor;
+	border-radius: $border-radius;
+	@include font-size(s);
+	@include line-height(1);
+	@include padding(0.25 0.5);
+	@include baseline-borders($border-width, 0, 1);
+
+	&:active,
+	&:focus {
+		border-color: color(black);
+	}
+	&:-moz-placeholder {
+		color: rgba(color(black), 0.5);
+	}
+	&::-moz-placeholder {
+		color: rgba(color(black), 0.5);
+	}
+	&:-ms-input-placeholder {
+		color: rgba(color(black), 0.5);
+	}
+	&::-webkit-input-placeholder {
+		color: rgba(color(black), 0.5);
+	}
+}
+
+select {
+	$select: () !default
+	@include spacing(height, $base-line-height * 1.5 + $border-width * 2);
+	@include print($select);
+}
+
+textarea {
+	$textarea: () !default
+	@include spacing(height, $base-line-height * 4.5 + $border-width * 2);
+	@include print($textarea);
+}
+
+input[type=search],
+input[type=number] {
+	box-sizing: border-box;
+	appearance: textfield;
+}
+
+input[type=radio],
+input[type=checkbox] {
+	display: inline-block;
+	position: relative;
+	top: -1px;
+	width: auto;
+	padding: 0;
+	margin: 0;
+
+	+ label {
+		display: inline-block;
+		width: auto;
+		padding: 0;
+		@include line-height(1);
+		@include margin(0 1 1 0.125);
+	}
+}
+
+} // @endif

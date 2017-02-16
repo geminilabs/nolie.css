@@ -1,0 +1,49 @@
+@function enabled($component, $option: null) {
+	$features: extend($default-features, $features, true);
+	$feature: map-get($features, $component);
+	@if length($feature) < 1 {
+		$feature: map-get($default-features, $component);
+	}
+	@if type-of($feature) == 'map' and $option == null {
+		@return true;
+	}
+	@else if type-of($feature) == 'map' {
+		@return if(map-get($feature, $option), true, false);
+	}
+	@return if($feature, true, false);
+}
+
+@function extend($object, $objects.../*, $deep */) {
+	/// http://www.sassmeister.com/gist/7525f0546479acd1d6e1
+	$deep: nth($objects, -1) == true;
+	$max: if($deep, length($objects) - 1, length($objects));
+	@for $i from 1 through $max {
+		$current: nth($objects, $i);
+		// If not in deep mode, simply merge current map with object
+		@if not $deep {
+			$object: map-merge($object, $current);
+		}
+		// If in deep mode
+		@else {
+			// Loop through all tuples in current map
+			@each $key, $value in $current {
+				// If value is a nested map and same key from object is a nested map as well
+				@if type-of($value) == 'map' and type-of(map-get($object, $key)) == 'map' {
+					// Recursive extend
+					$value: extend(map-get($object, $key), $value, true);
+				}
+				// Merge current tuple with object
+				$object: map-merge($object, ($key: $value));
+			}
+		}
+	}
+	@return $object;
+}
+
+@function get-tilted-height($angle) {
+	$A: (90deg - $angle);
+	$a: (100% / 1%);
+	$c: ($a / sin($A));
+	$b: sqrt(pow($c, 2) - pow($a, 2));
+	@return (abs($b) * 1%);
+}

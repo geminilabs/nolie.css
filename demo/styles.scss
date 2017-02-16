@@ -1,0 +1,61 @@
+// custom options here
+$features: (
+	debug: true,
+	// styled: false,
+	// output: false,
+	buttons: true,
+	icons: true,
+	tables: false,
+);
+
+@import "../src/nolie";
+
+main {
+	@include padding(1 0 0);
+}
+
+.section__title {
+	@include typeset(heading-3);
+	&:before {
+		content: '# ';
+	}
+}
+.section__subtitle {
+	@include typeset(heading-5);
+	&:before {
+		content: '## ';
+	}
+}
+
+.article__row {
+	@include margin(0 -1);
+	position: relative;
+
+	&::after {
+		clear: both;
+		display: table;
+		content: '';
+	}
+}
+.article__col {
+	@include padding(0 1);
+	float: left;
+	width: 100%;
+}
+.article__dropcap {
+	@include spacing(width, 3.5);
+	@include typeset(heading-1);
+	@include line-height(3);
+	@include padding-top(0.5);
+	@include margin(0 0.5 0.5 0);
+	float: left;
+	color: color(white);
+	background-color: color(black);
+	text-align: center;
+}
+.article__streamer {
+	@include margin-right(0.25);
+	font-variant: small-caps;
+	text-transform: lowercase;
+	letter-spacing: 1px;
+}
