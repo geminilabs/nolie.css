@@ -3,7 +3,7 @@ $features: () !default;
 $default-features: (
 	debug: false,
 	output: true,
-	styled: true,
+	styled: false,
 	buttons: (
 		big: false,
 		large: false,

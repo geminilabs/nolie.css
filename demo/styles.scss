@@ -1,7 +1,7 @@
 // custom options here
 $features: (
 	debug: true,
-	// styled: false,
+	// styled: true,
 	// output: false,
 	buttons: true,
 	icons: true,
@@ -10,8 +10,11 @@ $features: (
 
 @import "../src/nolie";
 
-main {
-	@include padding(1 0 0);
+.main {
+	@include padding-top(1);
+}
+
+.column {
 }
 
 .section__title {
