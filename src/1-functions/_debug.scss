@@ -1,0 +1,7 @@
+@function debug-color($value) {
+	$debug-colors: extend($debug-colors-default, $debug-colors, true);
+	@if type-of($value) == number {
+		@return nth(nth($debug-colors, $value), 2);
+	}
+	@return map-get($debug-colors, $value);
+}
