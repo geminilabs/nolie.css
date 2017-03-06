@@ -1,5 +1,9 @@
 @import "node_modules/include-media/dist/include-media";
 
+//     400px         600px        768px         900px        1200px       1800px
+// └────┬────┘ └────┬────┘ └────┬────┘ └────┬────┘ └────┬────┘ └────┬────┘
+//       XS            S            M            L             XL           XXL
+
 // https://medium.freecodecamp.com/the-100-correct-way-to-do-css-breakpoints-88d6a5ba1862
 
 $breakpoints: (
