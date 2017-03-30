@@ -59,22 +59,11 @@ textarea {
 	@include line-height(1);
 	@include padding(0.25 0.5);
 	@include baseline-borders($border-width, 0, 1);
+	@include placeholder(color(placeholder));
 
 	&:active,
 	&:focus {
 		border-color: color(black);
-	}
-	&:-moz-placeholder {
-		color: rgba(color(black), 0.5);
-	}
-	&::-moz-placeholder {
-		color: rgba(color(black), 0.5);
-	}
-	&:-ms-input-placeholder {
-		color: rgba(color(black), 0.5);
-	}
-	&::-webkit-input-placeholder {
-		color: rgba(color(black), 0.5);
 	}
 }
 
