@@ -27,7 +27,7 @@
 			text-align: center;
 			background-color: debug-color($i);
 			margin: 0 auto;
-			z-index: z-index(modal);
+			z-index: z(modal);
 			@each $key, $value in $breakpoints {
 				$i: $i+1;
 				@include media("screen", ">=#{$key}") {
