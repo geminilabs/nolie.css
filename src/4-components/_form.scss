@@ -79,6 +79,7 @@ textarea {
 	@include print($textarea);
 }
 
+input[type=date],
 input[type=search],
 input[type=number] {
 	box-sizing: border-box;
