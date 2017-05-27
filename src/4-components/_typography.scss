@@ -136,7 +136,6 @@ pre {
 	-webkit-overflow-scrolling: touch;
 	@include line-height(1);
 	@include padding(0.25 0.5);
-	@include debug-baseline;
 	@if enabled(styled) {
 		background-color: rgba(material-color(grey, 50), 1);
 		border: solid rgba(material-color(grey, 200), 1);

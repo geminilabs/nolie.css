@@ -1,56 +1,74 @@
-//
-@mixin grid-row {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
+$column-defaults: (
+	columns: 12,
+	left: 0,
+	right: 0,
+	span: 1,
+);
 
-	@include breakpoint(sm) {
-		flex-direction: column;
-		flex-wrap: nowrap;
+@mixin column-offset($options: ()) {
+	$options: map-merge($column-defaults, $options);
+	$columns: map-get($options, columns);
+	$offset-left: map-get($options, left);
+	$offset-right: map-get($options, right);
+	@if $offset-left != false {
+		margin-left: column-span($offset-left, $columns);
+	}
+	@if $offset-right != false {
+		margin-right: column-span($offset-right, $columns);
 	}
 }
 
-//
-@mixin generate-grid-columns {
-
-	@for $i from 1 through $grid-columns {
-		$width: 100% / $grid-columns * $i;
-
-		.col-#{$i} {
-			width: $width;
-		}
-
-		.offset-#{$i} {
-			margin-left: $width;
-		}
-	}
-
-	.gutters {
-		@for $i from 1 through $grid-columns {
-			$width: 100% / $grid-columns * $i;
-
-			& > .col-#{$i} {
-				width: calc(#{$width} - #{$grid-gutter});
-			}
-
-			& > .offset-#{$i} {
-				margin-left: calc(#{$width} + #{$grid-gutter});
-			}
-		}
-	}
+@mixin column-size($options: ()) {
+	$options: map-merge($column-defaults, $options);
+	width: column-span(map-get($options, span), map-get($options, columns));
+	@include column-offset($options);
 }
 
-//
-@mixin grid-media-columns($num) {
-	column-count: $num;
-	column-gap: $grid-gutter;
+@mixin column($options: ()) {
+	$defaults: (
+		gutter-size: 1,
+		property: 'padding-left',
+		type: 'inline-block',
+	);
+	$options: map-merge($options, $defaults);
 
-	& > div {
+	@if map-get($options, type) == 'inline-block' {
 		display: inline-block;
-		width: 100%;
+		vertical-align: top;
 	}
+	position: relative;
+	width: 100%;
+	margin: 0;
+	@include font-size(m);
+	@include _grid-breakpoint-gutters($options);
+}
 
-	@include breakpoint(sm) {
-		column-count: 1;
+@mixin row($options: ()) {
+	$defaults: (
+		gutter-size: -1,
+		property: 'margin-left',
+		type: 'inline-block',
+	);
+	$options: map-merge($options, $defaults);
+
+	@if map-get($options, type) == 'inline-block' {
+		font-size: 0;
+	}
+	@include _grid-breakpoint-gutters($options);
+}
+
+@mixin _grid-breakpoint-gutters($options) {
+	$property: map-get($options, property);
+	$media: map-get($options, media);
+	$num: map-get($options, gutter-size);
+
+	#{$property}: spacing(gutter($num));
+	@for $i from 1 through length($media) {
+		$breakpoint: nth($media, $i);
+		@if map-has-key($breakpoints, $breakpoint) {
+			@include media(">=#{$breakpoint}") {
+				#{$property}: spacing(gutter($breakpoint, $num));
+			}
+		}
 	}
 }

@@ -11,21 +11,29 @@
 	}
 }
 
-@mixin debug-media() {
+@mixin debug-media($options: ()) {
+	$debug-media-defaults: (
+		left: 0,
+		right: auto,
+		width: auto,
+	);
+	$options: map-merge($debug-media-defaults, $options);
 	@if enabled(debug) {
 		$i: 2;
 		body:before {
 			position: fixed !important;
 			top: 0;
-			left: 0;
-			right: 0;
-			width: 110px;
-			height: 18px;
+			left: map-get($options, left);
+			right: map-get($options, right);
+			width: map-get($options, width);
+			height: spacing(0.5);
 			content: 'default';
 			color: debug-color(black);
-			font: 12px/1.5 sans-serif;
+			font: 10px sans-serif;
+			@include line-height(0.5);
 			text-align: center;
 			background-color: debug-color($i);
+			padding: 0 3px;
 			margin: 0 auto;
 			@include z-index(modal);
 			@each $key, $value in $breakpoints {
@@ -33,6 +41,50 @@
 				@include media("screen", ">=#{$key}") {
 					content: "#{$key} - #{$value}";
 					background-color: debug-color($i);
+				}
+			}
+		}
+	}
+}
+
+@mixin debug-grid($options: ()) {
+	$debug-grid-defaults: (
+		color: rgba(0,0,0,0.05),
+		max-width: 1440px,
+		media: 'default',
+		selector: '.debug-grid',
+	);
+	$options: map-merge($debug-grid-defaults, $options);
+
+	@if enabled(debug) {
+		#{map-get($options, selector)} {
+			position: fixed;
+			top: 0;
+			left: gutter(map-get($options, media));
+			right: 0;
+			width: calc(100vw - #{gutter(map-get($options, media))});
+			height: 100vh;
+			pointer-events: none;
+			overflow: hidden;
+			@include z-index(modal);
+
+			@include media('>#{map-get($options, max-width)}') {
+				width: map-get($options, max-width) - gutter(map-get($options, media));
+				margin: 0 auto;
+			}
+
+			> div {
+				float: left;
+				height: 100vh;
+				width: calc(#{100% / columns(map-get($options, media))} - #{gutter(map-get($options, media))});
+				background-color: map-get($options, color);
+				margin-right: gutter(map-get($options, media));
+
+				&:nth-child(1n+#{columns(map-get($options, media)) + 1}) {
+					display: none;
+				}
+				&:nth-child(-n+#{columns(map-get($options, media))}) {
+					display: block;
 				}
 			}
 		}

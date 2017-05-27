@@ -1,0 +1,193 @@
+// custom options here
+$features: (
+	debug: true,
+	// styled: true,
+	// output: false,
+	buttons: true,
+	icons: true,
+	tables: false,
+);
+
+$max-width: 1440px;
+
+@import "../src/nolie";
+
+$gutters: (
+	default: spacing(0.75),
+	M: spacing(1),
+	XL: spacing(1.25),
+);
+
+$columns: (
+	default: 6,
+	S: 8,
+	M: 12,
+);
+
+/**
+ * @debug
+ */
+
+@include debug-media;
+@include debug-grid;
+
+@include media('>=S') {
+	@include debug-grid((media: S));
+}
+@include media('>=M') {
+	@include debug-grid((media: M));
+}
+@include media('>=XL') {
+	@include debug-grid((media: XL));
+}
+
+body {
+	@include debug-baseline;
+}
+
+/**
+ * @styles
+ */
+
+.main {
+	background-color: debug-color(3);
+	min-height: 100vh;
+	max-width: $max-width;
+	margin: 0 auto;
+	@include color(white);
+	@include padding(0 gutter());
+
+	@include media('>=M') {
+		@include padding(0 gutter(M));
+	}
+	@include media('>=XL') {
+		@include padding(0 gutter(XL));
+	}
+}
+
+.row {
+	@include row((media: M XL));
+}
+
+.column {
+	@include column((media: M XL));
+
+	> div {
+		background-color: debug-color(13);
+	}
+	.column > div {
+		background-color: debug-color(8);
+	}
+}
+
+.hero {
+	width: calc(100% + #{gutter(2)});
+	@include margin-left(gutter(-1));
+	@include margin-bottom(gutter());
+
+	@include media('>=M') {
+		width: calc(100% + #{gutter(M, 2)});
+		@include margin-left(gutter(M, -1));
+		@include margin-bottom(gutter(M));
+	}
+	@include media('>=XL') {
+		width: calc(100% + #{gutter(XL, 2)});
+		@include margin-left(gutter(XL, -1));
+		@include margin-bottom(gutter(XL));
+	}
+}
+
+.content {
+	min-height: 200px;
+	background-color: debug-color(5);
+	@include padding-left(gutter());
+
+	@include media('>=S') {
+		@include column-size((span:5, columns:8));
+	}
+	@include media('>=M') {
+		@include column-size((span:8));
+		@include padding-left(gutter(M));
+	}
+	@include media('>=L') {
+		@include column-size((span:9));
+	}
+	@include media('>=XL') {
+		@include padding-left(gutter(XL));
+	}
+
+	> div {
+		@include margin-bottom(gutter());
+
+		@include media('>=M') {
+			@include margin-bottom(gutter(M));
+		}
+		@include media('>=XL') {
+			@include margin-bottom(gutter(XL));
+		}
+	}
+}
+
+.sidebar {
+	background-color: debug-color(6);
+
+	@include media('>=S') {
+		@include column-size((span:3, columns:8));
+	}
+	@include media('>=M') {
+		@include column-size((span:4));
+	}
+	@include media('>=L') {
+		@include column-size((span:3));
+	}
+}
+
+.ratio-of-width {
+	position: relative;
+	padding-bottom: ratio-of-width((ratio:'1:1'));
+
+	> div {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: debug-color(12);
+	}
+}
+
+.gutter-small {
+	@include margin-left(gutter(-0.5));
+	@include media('>=M') {
+		@include margin-left(gutter(M, -0.5));
+	}
+	@include media('>=XL') {
+		@include margin-left(gutter(XL, -0.5));
+	}
+	> .column {
+		@include padding-left(gutter(0.5));
+		@include media('>=M') {
+			@include padding-left(gutter(M, 0.5));
+		}
+		@include media('>=XL') {
+			@include padding-left(gutter(XL, 0.5));
+		}
+	}
+}
+
+.gallery-image {
+	@include column-size((columns:3));
+	@include margin-bottom(gutter(0.5));
+
+	@include media('>=XS') {
+		@include column-size((columns:4));
+	}
+	@include media('>=M') {
+		@include column-size((columns:6));
+		@include margin-bottom(gutter(M, 0.5));
+	}
+	@include media('>=XL') {
+		@include column-size((columns:8));
+		@include margin-bottom(gutter(XL, 0.5));
+	}
+}

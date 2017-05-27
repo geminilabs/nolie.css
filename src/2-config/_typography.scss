@@ -22,7 +22,7 @@ $line-height-method: rhythm;
 $base-line-height-ratio: 1.5;
 
 // By default we will provide fallbacks when rem is the base unit.
-$rem-fallback: true;
+$rem-fallback: false;
 
 // By default, when rem or em are the base unit we will output a print suitable
 // media query with the define-type-sizing() mixin. This will take care of all
@@ -55,10 +55,10 @@ $font-size: (
 // This map and accompanying function help provide granular control over
 // setting and retrieving static font weights.
 $font-weight: (
-  bolder:  900,
-  bold:    700,
-  normal:  400,
-  light: 200
+  bolder: 900,
+  bold:   700,
+  normal: 400,
+  light:  200
 );
 
 // Declare typefaces

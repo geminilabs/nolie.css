@@ -1,0 +1,53 @@
+/**
+ * @return percent
+ */
+@function column-span($span: 1, $columns: 12) {
+	@return 100% / $columns * $span;
+}
+
+/**
+ * @return int
+ */
+@function columns($breakpoint: default) {
+	@return _get-map-value-for-breakpoint($breakpoint, 12, $columns);
+}
+
+/**
+ * @return unit px
+ */
+@function gutter($breakpoint: default, $multiplier: 1) {
+	@if type-of($breakpoint) == number {
+		$multiplier: $breakpoint;
+		$breakpoint: 'default';
+	}
+	$value: _get-map-value-for-breakpoint($breakpoint, $base-line-height, $gutters);
+	@return px($value * $multiplier);
+}
+
+/**
+ * @return percent
+ */
+@function ratio-of-width($options: ()) {
+	$options: map-merge((ratio:'1:1', span:12, columns:12), $options);
+	$ratio: map-get($options, ratio);
+	$width: str-slice($ratio, 1, str-index($ratio, ':') - 1);
+	$height: str-slice($ratio, str-index($ratio, ':') + 1);
+	@return percentage(string-to-number($height) / string-to-number($width) * map-get($options, span) / map-get($options, columns));
+}
+
+/**
+ * @return mixed
+ */
+@function _get-map-value-for-breakpoint($breakpoint, $default-value, $options) {
+	$defaults: map-merge((default: $default-value), $breakpoints);
+	@each $key, $value in $defaults {
+		@if map-has-key($options, $key) {
+			$default-value: map-get($options, $key);
+		}
+		$defaults: map-merge($defaults, ($key: $default-value));
+	}
+	@if map-get($defaults, $breakpoint) {
+		@return map-get($defaults, $breakpoint);
+	}
+	@return $default-value;
+}
