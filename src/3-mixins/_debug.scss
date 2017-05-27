@@ -51,41 +51,51 @@
 	$debug-grid-defaults: (
 		color: rgba(0,0,0,0.05),
 		max-width: 1440px,
-		media: 'default',
+		media: null,
 		selector: '.debug-grid',
 	);
 	$options: map-merge($debug-grid-defaults, $options);
+	$media: map-get($options, media);
 
 	@if enabled(debug) {
-		#{map-get($options, selector)} {
-			position: fixed;
-			top: 0;
-			left: gutter(map-get($options, media));
-			right: 0;
-			width: calc(100vw - #{gutter(map-get($options, media))});
-			height: 100vh;
-			pointer-events: none;
-			overflow: hidden;
-			@include z-index(modal);
-
-			@include media('>#{map-get($options, max-width)}') {
-				width: map-get($options, max-width) - gutter(map-get($options, media));
-				margin: 0 auto;
+		@include _debug-grid($options, default);
+		@for $i from 1 through length($media) {
+			$breakpoint: nth($media, $i);
+			@if map-has-key($breakpoints, $breakpoint) {
+				@include media(">=#{$breakpoint}") {
+					@include _debug-grid($options, $breakpoint);
+				}
 			}
+		}
+	}
+}
 
-			> div {
-				float: left;
-				height: 100vh;
-				width: calc(#{100% / columns(map-get($options, media))} - #{gutter(map-get($options, media))});
-				background-color: map-get($options, color);
-				margin-right: gutter(map-get($options, media));
-
-				&:nth-child(1n+#{columns(map-get($options, media)) + 1}) {
-					display: none;
-				}
-				&:nth-child(-n+#{columns(map-get($options, media))}) {
-					display: block;
-				}
+@mixin _debug-grid($options, $breakpoint) {
+	#{map-get($options, selector)} {
+		position: fixed;
+		top: 0;
+		left: gutter($breakpoint);
+		right: 0;
+		width: calc(100vw - #{gutter($breakpoint)});
+		height: 100vh;
+		pointer-events: none;
+		overflow: hidden;
+		@include z-index(modal);
+		@include media('>#{map-get($options, max-width)}') {
+			width: map-get($options, max-width) - gutter($breakpoint);
+			margin: 0 auto;
+		}
+		> div {
+			float: left;
+			height: 100vh;
+			width: calc(#{100% / columns($breakpoint)} - #{gutter($breakpoint)});
+			background-color: map-get($options, color);
+			margin-right: gutter($breakpoint);
+			&:nth-child(1n+#{columns($breakpoint) + 1}) {
+				display: none;
+			}
+			&:nth-child(-n+#{columns($breakpoint)}) {
+				display: block;
 			}
 		}
 	}

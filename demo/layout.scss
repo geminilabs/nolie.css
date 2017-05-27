@@ -29,17 +29,7 @@ $columns: (
  */
 
 @include debug-media;
-@include debug-grid;
-
-@include media('>=S') {
-	@include debug-grid((media: S));
-}
-@include media('>=M') {
-	@include debug-grid((media: M));
-}
-@include media('>=XL') {
-	@include debug-grid((media: XL));
-}
+@include debug-grid((media: S M XL));
 
 body {
 	@include debug-baseline;
