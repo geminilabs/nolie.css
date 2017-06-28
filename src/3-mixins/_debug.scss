@@ -50,7 +50,7 @@
 @mixin debug-grid($options: ()) {
 	$debug-grid-defaults: (
 		color: rgba(0,0,0,0.05),
-		max-width: 1440px,
+		max-width: $max-page-width,
 		media: null,
 		selector: '.debug-grid',
 	);
@@ -71,18 +71,20 @@
 }
 
 @mixin _debug-grid($options, $breakpoint) {
+	$grid-offset: (offset($breakpoint) * 2) - gutter($breakpoint);
 	#{map-get($options, selector)} {
 		position: fixed;
 		top: 0;
-		left: gutter($breakpoint);
+		left: offset($breakpoint);
 		right: 0;
-		width: calc(100vw - #{gutter($breakpoint)});
+		width: calc(100vw - #{$grid-offset});
 		height: 100vh;
 		pointer-events: none;
 		overflow: hidden;
 		@include z-index(modal);
 		@include media('>#{map-get($options, max-width)}') {
-			width: map-get($options, max-width) - gutter($breakpoint);
+			left: gutter($breakpoint);
+			width: map-get($options, max-width) - $grid-offset;
 			margin: 0 auto;
 		}
 		> div {

@@ -16,12 +16,14 @@
  * @return unit px
  */
 @function gutter($breakpoint: default, $multiplier: 1) {
-	@if type-of($breakpoint) == number {
-		$multiplier: $breakpoint;
-		$breakpoint: 'default';
-	}
-	$value: _get-map-value-for-breakpoint($breakpoint, $base-line-height, $gutters);
-	@return px($value * $multiplier);
+	@return _get-breakpoint-multiplier($gutters, $breakpoint, $multiplier);
+}
+
+/**
+ * @return unit px
+ */
+@function offset($breakpoint: default, $multiplier: 1) {
+	@return _get-breakpoint-multiplier($offsets, $breakpoint, $multiplier);
 }
 
 /**
@@ -33,6 +35,18 @@
 	$width: str-slice($ratio, 1, str-index($ratio, ':') - 1);
 	$height: str-slice($ratio, str-index($ratio, ':') + 1);
 	@return percentage(string-to-number($height) / string-to-number($width) * map-get($options, span) / map-get($options, columns));
+}
+
+/**
+ * @return unit px
+ */
+@function _get-breakpoint-multiplier($breakpoints, $breakpoint: default, $multiplier: 1) {
+	@if type-of($breakpoint) == number {
+		$multiplier: $breakpoint;
+		$breakpoint: 'default';
+	}
+	$value: _get-map-value-for-breakpoint($breakpoint, $base-line-height, $breakpoints);
+	@return px($value * $multiplier);
 }
 
 /**

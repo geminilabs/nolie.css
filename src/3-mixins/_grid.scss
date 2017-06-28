@@ -1,6 +1,7 @@
 $column-defaults: (
 	columns: 12,
 	left: 0,
+	offset: 0,
 	right: 0,
 	span: 1,
 );
@@ -20,8 +21,21 @@ $column-defaults: (
 
 @mixin column-size($options: ()) {
 	$options: map-merge($column-defaults, $options);
-	width: column-span(map-get($options, span), map-get($options, columns));
+	@include column-width($options);
 	@include column-offset($options);
+}
+
+@mixin column-width($options: ()) {
+	$options: map-merge($column-defaults, $options);
+	$offset: map-get($options, offset);
+	$width: column-span(map-get($options, span), map-get($options, columns));
+	@if unitless($offset) == false {
+		$subtract: to-unit(unit($offset), num($offset) * (num($width) / 100));
+		width: calc(#{$width} - #{$offset - $subtract});
+	}
+	@else {
+		width: $width;
+	}
 }
 
 @mixin column($options: ()) {
@@ -30,7 +44,7 @@ $column-defaults: (
 		property: 'padding-left',
 		type: 'inline-block',
 	);
-	$options: map-merge($options, $defaults);
+	$options: map-merge($defaults, $options);
 
 	@if map-get($options, type) == 'inline-block' {
 		display: inline-block;
@@ -49,7 +63,7 @@ $column-defaults: (
 		property: 'margin-left',
 		type: 'inline-block',
 	);
-	$options: map-merge($options, $defaults);
+	$options: map-merge($defaults, $options);
 
 	@if map-get($options, type) == 'inline-block' {
 		font-size: 0;
