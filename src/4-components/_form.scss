@@ -8,8 +8,8 @@ form {
 }
 
 fieldset {
-	position: relative;
 	$fieldset: () !default
+	position: relative;
 	display: block;
 	border: 0 solid currentColor;
 	@if enabled(styled) {

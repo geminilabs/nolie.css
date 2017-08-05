@@ -11,11 +11,23 @@ $column-defaults: (
 	$columns: map-get($options, columns);
 	$offset-left: map-get($options, left);
 	$offset-right: map-get($options, right);
-	@if $offset-left != false {
-		margin-left: column-span($offset-left, $columns);
+
+	$offset: map-get($options, offset);
+	$left: column-span($offset-left, $columns);
+	$right: column-span($offset-right, $columns);
+
+	@if unitless($offset) == false {
+		$width: column-span(map-get($options, span), $columns);
+		$subtract: to-unit(unit($offset), num($offset) * (num($width) / 100)) - $offset;
+		$left: calc(#{$left} - #{$subtract / 2});
+		$right: calc(#{$right} - #{$subtract / 2});
 	}
-	@if $offset-right != false {
-		margin-right: column-span($offset-right, $columns);
+
+	@if $offset-left != 0 {
+		margin-left: $left;
+	}
+	@if $offset-right != 0 {
+		margin-right: $right;
 	}
 }
 
