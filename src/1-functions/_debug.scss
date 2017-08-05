@@ -1,7 +1,7 @@
-@function debug-color($value) {
+@function debug-color($value, $opacity:1) {
 	$debug-colors: extend($debug-colors-default, $debug-colors, true);
 	@if type-of($value) == number {
-		@return nth(nth($debug-colors, $value), 2);
+		@return rgba(nth(nth($debug-colors, $value), 2), $opacity);
 	}
-	@return map-get($debug-colors, $value);
+	@return rgba(map-get($debug-colors, $value), $opacity);
 }
