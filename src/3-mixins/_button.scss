@@ -14,168 +14,89 @@
 	border-radius: $button-radius;
 	user-select: none;
 	vertical-align: top;
-
-	@if enabled(styled) {
-		@include button-style-primary;
-	}
-	@else {
-		color: color(white);
-		background-color: color(muted);
-		border-color: color(muted);
-	}
-	@if enabled(buttons, secondary) {
-		&.secondary {
-			@if enabled(styled) {
-				@include button-style-secondary;
-			}
-			@else {
-				background-color: color(muted);
-				border-color: color(muted);
-			}
-		}
-	}
-	@if enabled(buttons, outline) {
-		&.outline {
-			@if enabled(styled) {
-				@include button-style-outline;
-			}
-			@else {
-				color: color(black);
-				border-color: color(black);
-				background: none;
-			}
-		}
-		@if enabled(buttons, secondary) {
-			&.outline.secondary {
-				@if enabled(styled) {
-					@include button-style-outline-secondary;
-				}
-				@else {
-					color: color(muted);
-					border-color: color(muted);
-				}
-			}
-		}
-	}
-	@if enabled(buttons, tiny) {
-		&.tiny {
-			@include button-tiny;
-		}
-	}
-	@if enabled(buttons, small) {
-		&.small {
-			@include button-small;
-		}
-	}
-	@if enabled(buttons, medium) {
-		&.medium {
-			@include button-medium;
-		}
-	}
-	@if enabled(buttons, large) {
-		&.large {
-			@include button-large;
-		}
-	}
-	@if enabled(buttons, round) {
-		&.round {
-			@include button-round;
-		}
-	}
-	@if enabled(buttons, upper) {
-		&.upper {
-			@include button-upper;
-		}
-	}
-	@if enabled(buttons, groups) {
-		@include button-group;
-	}
-	@if enabled(icons) {
-		@include button-icons;
-	}
-}
-
-@mixin button-style-primary {
-	color: color(white);
-	background-color: color(primary);
-	border-color: color(primary);
 	&:hover {
-		color: color(white);
-		background-color: darken(color(primary), 10);
-		border-color: darken(color(primary), 10);
 		outline: none;
 		text-decoration: none;
 	}
-	&:active,
-	&.active {
-		background-color: darken(color(primary), 20);
-		border-color: darken(color(primary), 20);
-	}
-	&:disabled,
+	&[disabled],
 	&.disabled {
 		opacity: 0.7;
-		background-color: color(primary);
-		border-color: color(primary);
 		cursor: default;
 	}
 }
 
-@mixin button-style-secondary {
-	background-color: color(muted);
-	border-color: color(muted);
-	&:hover {
-		background-color: darken(color(muted), 10);
-		border-color: darken(color(muted), 10);
-	}
-	&:active,
-	&.active {
-		background-color: darken(color(muted), 20);
-		border-color: darken(color(muted), 20);
-	}
-	&:disabled,
-	&.disabled {
-		background-color: color(muted);
-		border-color: color(muted);
-	}
+@mixin button-style-solid($options: ()) {
+	@include _button-style($options);
 }
 
-@mixin button-style-outline {
-	color: color(primary);
-	border-color: color(primary);
-	background: none;
-	&:hover {
-		color: darken(color(primary), 10);
-		border-color: darken(color(primary), 10);
-	}
-	&:active,
-	&.active {
-		color: darken(color(primary), 20);
-		border-color: darken(color(primary), 20);
-	}
-	&:disabled,
-	&.disabled {
-		color: color(primary);
-		border-color: color(primary);
-	}
+@mixin button-solid($color, $text) {
+	@include button-style-solid((
+		background-color: $color,
+		border-color: $color,
+		color: $text,
+		hover: (
+			background-color: darken($color, 10),
+			border-color: darken($color, 10),
+			color: $text,
+		),
+		active: (
+			background-color: darken($color, 20),
+			border-color: darken($color, 20),
+			color: $text,
+		),
+		disabled: (
+			background-color: $color,
+			border-color: $color,
+			color: $text,
+		),
+	));
 }
 
-@mixin button-style-outline-secondary {
-	color: color(muted);
-	border-color: color(muted);
-	background: none;
-	&:hover {
-		color: darken(color(muted), 10);
-		border-color: darken(color(muted), 10);
-	}
-	&:active,
-	&.active {
-		color: darken(color(muted), 20);
-		border-color: darken(color(muted), 20);
-	}
-	&:disabled,
-	&.disabled {
-		color: color(muted);
-		border-color: color(muted);
+@mixin button-style-outline($options: ()) {
+	$options: extend((
+		background-color: transparent,
+		border-color: currentColor,
+		color: color(primary),
+		hover: (
+			background-color: color(white),
+			border-color: currentColor,
+			color: darken(color(primary), 10),
+		),
+		active: (
+			background-color: color(white),
+			border-color: currentColor,
+			color: darken(color(primary), 20),
+		),
+		disabled: (
+			background-color: transparent,
+			border-color: currentColor,
+			color: color(primary),
+		),
+	), $options, true);
+	@include _button-style($options);
+}
+
+@mixin button-outline($color) {
+	@include button-style-outline((
+		color: $color,
+		hover: (
+			color: darken($color, 10),
+		),
+		active: (
+			color: darken($color, 20),
+		),
+		disabled: (
+			color: $color,
+		),
+	));
+}
+
+@mixin button-transition($speed: 0.125s, $translateY: 1px) {
+	transition: color $speed ease-in-out,
+				background-color $speed ease-in-out,
+				border-color $speed ease-in-out;
+	&:not([disabled]):not(.disabled):active {
+		transform: translate3d(0,$translateY,0);
 	}
 }
 
@@ -243,5 +164,64 @@
 @mixin button-icons {
 	& i {
 		@include margin-right(0.125);
+	}
+}
+
+@mixin _button-style($options: ()) {
+	$default: (
+		background-color: color(primary),
+		border-color: color(primary),
+		color: color(white),
+	);
+	$options: extend((
+		hover: map-merge((
+			background-color: darken(color(primary), 10),
+			border-color: darken(color(primary), 10),
+		), $default),
+		active: map-merge((
+			background-color: darken(color(primary), 20),
+			border-color: darken(color(primary), 20),
+		), $default),
+		disabled: $default,
+	), $default, $options, true);
+
+	color: map-get($options, color);
+	background-color: map-get($options, background-color);
+	border-color: map-get($options, border-color);
+
+	&:hover {
+		$hover-color: map-get(map-get($options, hover), color);
+		$hover-background-color: map-get(map-get($options, hover), background-color);
+		$hover-border-color: map-get(map-get($options, hover), border-color);
+		@if $hover-color != map-get($options, color) {
+			color: $hover-color;
+		}
+		@if $hover-background-color != map-get($options, background-color) {
+			background-color: $hover-background-color;
+		}
+		@if $hover-border-color != map-get($options, border-color) {
+			border-color: $hover-border-color;
+		}
+	}
+	&:active,
+	&.active {
+		$active-color: map-get(map-get($options, active), color);
+		$active-background-color: map-get(map-get($options, active), background-color);
+		$active-border-color: map-get(map-get($options, active), border-color);
+		@if $active-color != map-get($options, color) {
+			color: $active-color;
+		}
+		@if $active-background-color != map-get($options, background-color) {
+			background-color: $active-background-color;
+		}
+		@if $active-border-color != map-get($options, border-color) {
+			border-color: $active-border-color;
+		}
+	}
+	&[disabled],
+	&.disabled {
+		color: map-get(map-get($options, disabled), color);
+		background-color: map-get(map-get($options, disabled), background-color);
+		border-color: map-get(map-get($options, disabled), border-color);
 	}
 }

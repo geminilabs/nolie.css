@@ -2,6 +2,85 @@
 
 .button {
 	@include button();
+
+	@if enabled(styled) {
+		@include button-solid(color(primary));
+	}
+	@else {
+		color: color(white);
+		background-color: color(black);
+		border-color: color(black);
+	}
+	@if enabled(buttons, secondary) {
+		&.secondary {
+			@if enabled(styled) {
+				@include button-solid(color(secondary));
+			}
+			@else {
+				background-color: color(muted);
+				border-color: color(muted);
+			}
+		}
+	}
+	@if enabled(buttons, outline) {
+		&.outline {
+			@if enabled(styled) {
+				@include button-outline(color(primary));
+			}
+			@else {
+				color: color(black);
+				border-color: currentColor;
+				background-color: transparent;
+			}
+		}
+		@if enabled(buttons, secondary) {
+			&.outline.secondary {
+				@if enabled(styled) {
+					@include button-outline(color(secondary));
+				}
+				@else {
+					color: color(muted);
+					border-color: currentColor;
+				}
+			}
+		}
+	}
+	@if enabled(buttons, tiny) {
+		&.tiny {
+			@include button-tiny;
+		}
+	}
+	@if enabled(buttons, small) {
+		&.small {
+			@include button-small;
+		}
+	}
+	@if enabled(buttons, medium) {
+		&.medium {
+			@include button-medium;
+		}
+	}
+	@if enabled(buttons, large) {
+		&.large {
+			@include button-large;
+		}
+	}
+	@if enabled(buttons, round) {
+		&.round {
+			@include button-round;
+		}
+	}
+	@if enabled(buttons, upper) {
+		&.upper {
+			@include button-upper;
+		}
+	}
+	@if enabled(buttons, groups) {
+		@include button-group;
+	}
+	@if enabled(icons) {
+		@include button-icons;
+	}
 }
 
 } // @endif
