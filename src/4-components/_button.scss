@@ -4,7 +4,7 @@
 	@include button();
 
 	@if enabled(styled) {
-		@include button-solid(color(primary));
+		@include button-solid(color(primary), color(white));
 	}
 	@else {
 		color: color(white);
@@ -14,7 +14,7 @@
 	@if enabled(buttons, secondary) {
 		&.secondary {
 			@if enabled(styled) {
-				@include button-solid(color(secondary));
+				@include button-solid(color(secondary), color(white));
 			}
 			@else {
 				background-color: color(muted);
